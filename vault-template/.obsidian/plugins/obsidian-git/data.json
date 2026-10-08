@@ -1,0 +1,17 @@
+{
+  "commitMessage": "vault: manual edits {{date}}",
+  "autoCommitMessage": "vault: manual edits {{date}}",
+  "commitDateFormat": "YYYY-MM-DD HH:mm",
+  "autoSaveInterval": 10,
+  "autoPushInterval": 0,
+  "autoPullInterval": 10,
+  "autoPullOnBoot": true,
+  "disablePush": false,
+  "pullBeforePush": true,
+  "disablePopups": false,
+  "disablePopupsForNoChanges": true,
+  "showStatusBar": true,
+  "differentIntervalCommitAndPush": false,
+  "autoBackupAfterFileChange": true,
+  "syncMethod": "rebase"
+}
