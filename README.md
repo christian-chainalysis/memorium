@@ -3,7 +3,7 @@
 
 ### Your work, remembered.
 
-![IMG_7141](https://github.com/user-attachments/assets/ac1e04e2-0eef-4c3d-a37e-aa67e05cbcdb)
+![Hornet at the Memorium, from Silksong](docs/memorium.jpg)
 _Named after the [Memorium](https://www.hollowknight.wiki/w/Memorium) from Silksong, a place built to remember the species of certain regions. This place remembers you._
 
 
