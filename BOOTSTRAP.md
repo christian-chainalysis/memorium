@@ -38,7 +38,7 @@ Ask, one group at a time:
    - **Homepage:** `gh release download -R mirnovov/obsidian-homepage -p main.js -p manifest.json -p styles.css` into `.obsidian/plugins/homepage/`.
    
    Then ask me to turn off Restricted mode in Obsidian, open the vault folder, and enable both.
-5. `git init`, commit, and offer to create a **private** GitHub repo with `gh repo create <me>/notes --private --source=. --push`.
+5. `git init`, commit, and create a **private** GitHub repo with `gh repo create <me>/notes --private --source=. --push`. This is a new repo, separate from the Memorium clone. Never make it public, and never push it to the Memorium remote. Check with `git remote -v` that `origin` points to `<me>/notes`.
 
 ## 4. Link the skills
 

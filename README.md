@@ -31,7 +31,18 @@ Two more skills round it out:
 - `/meeting` turns a meeting transcript into a note that leads with your role.
 - `/topic` keeps a private brief about a subject, built from a repo plus transcripts, that you can ask questions against.
 
-Everything stays on your machine and in your own private git repo.
+## Two repos
+
+Memorium uses two repos, and they never mix:
+
+| | Memorium (this repo) | Your notes |
+| --- | --- | --- |
+| What | The kit: skills, scripts, vault template | Your vault: everything written about you |
+| Where | Cloned to `~/dev/memorium` | Created at `~/notes` from `vault-template/` |
+| Visibility | Shared | **Always private** |
+| You | Pull updates. Push generic improvements | Commit often. It's your backup |
+
+Setup creates the notes repo for you with `gh repo create <you>/notes --private`. It's a fresh repo with no git link back to Memorium. Never put notes in your Memorium clone, and never copy anything from your notes into Memorium.
 
 ## Set up (about 10 minutes)
 
@@ -39,7 +50,7 @@ Everything stays on your machine and in your own private git repo.
 2. Start an agent session in your home folder.
 3. Paste [`BOOTSTRAP.md`](BOOTSTRAP.md) into it.
 
-The agent interviews you, installs Obsidian and its CLI, creates your vault from `vault-template/`, links the skills, and runs a test week with you.
+The agent interviews you, installs Obsidian and its CLI, creates your vault from `vault-template/` as a new private repo, links the skills, and runs a test week with you.
 
 ## What's in the kit
 
