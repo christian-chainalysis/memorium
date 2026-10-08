@@ -1,10 +1,17 @@
 # Memorium
 
-**Your work, remembered.**
 
+### Your work, remembered.
+
+![IMG_7141](https://github.com/user-attachments/assets/ac1e04e2-0eef-4c3d-a37e-aa67e05cbcdb)
+_Named after the [Memorium](https://www.hollowknight.wiki/w/Memorium) from Silksong, a place built to remember the species of certain regions. This place remembers you._
+
+
+
+## Overview
 Memorium turns your agent sessions, PRs, and meetings into a private, linked record of your work: what you shipped, how you work, and what slows you down. It's a small kit: three agent skills, some scripts, and an Obsidian vault template. Your agent does the setup.
 
-_Named after the Memorium in Silksong, a place built to remember. This one remembers you._
+
 
 ## What you get
 
