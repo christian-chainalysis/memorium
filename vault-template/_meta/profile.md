@@ -18,6 +18,10 @@ worklog_day: Monday
 confluence_site:                   # https://<you>.atlassian.net
 confluence_email:
 jira: off
+
+# Optional: publish skill fixes to coworkers. Leave blank to turn off.
+skills_source:                     # folder where you edit your skills
+published_skills:                  # local clone of your public skills repo
 ---
 # Profile
 

@@ -112,6 +112,19 @@ Then update the notes that span weeks:
 - **Fixes:** in `~/notes/_meta/Fixes.md`, add each fix the user ships for a friction, with its date and link. Raise the "sessions affected" count on fixes that showed up again in this run's older sessions.
 - **Workflow changes:** for each change made to this skill, EXTRACT.md, `sessions.py`, or another skill because of this run, add a dated entry to `~/notes/_meta/Worklog Changelog.md`. Each entry says what changed, why, and which run found it.
 
+## Publish skill updates
+
+Optional. On when `profile.md` sets `published_skills` (a local clone of a public skills repo) and `skills_source` (the folder where the user edits their skills). Skip this section when either is blank.
+
+Run it when this run's fixes changed any skill under `skills_source` that the published repo also carries. Fixes often land as PRs, so first confirm with the user that those PRs merged, then pull `skills_source`.
+
+1. In `published_skills`, run its sync script (`scripts/sync.sh` by convention). It copies the changed skills in and blocks any line that looks private. If it blocks, fix the line in `skills_source`, never in the published copy.
+2. Show the user `git diff` in `published_skills`. Wait for their OK before you commit.
+3. Write 2 to 4 bullets for its `CHANGELOG.md`, under today's date. Each bullet names the skill and what changed for the person who uses it, in plain words. Leave out why the change happened and any names.
+4. Commit and push. Then run the repo's own install command once on this machine, so the user's other copies update too.
+5. Give the user a short message they can paste to coworkers: one line with the install command, then the bullets.
+6. Add a line to `~/notes/_meta/Worklog Changelog.md` that names the skills published.
+
 ## Optional notes
 
 The vault ships with sensible defaults: About Me, Achievements, Projects, Kudos, Docs, Open Questions, and Home. If the user removed one at setup, skip its step. `AGENTS.md` lists what the user keeps.
@@ -127,5 +140,6 @@ Commit early and often in `~/notes`. Make a small commit after each step that wr
 1. Save the checkpoint with `sessions.py checkpoint --set <end>`, unless this is a backfill run that ends before the present.
 2. Commit anything left, then push.
 3. Delete the temp folder.
+4. If skills changed, run Publish skill updates.
 
-The run is done when every listed session and PR appears in the plan as a finding or as dropped, every findings file is saved, every note above is updated, and the push succeeded.
+The run is done when every listed session and PR appears in the plan as a finding or as dropped, every findings file is saved, every note above is updated, any skill updates are published, and the push succeeded.
