@@ -19,9 +19,9 @@ confluence_site:                   # https://<you>.atlassian.net
 confluence_email:
 jira: off
 
-# Optional: publish skill fixes to coworkers. Leave blank to turn off.
+# Optional: your own agent skills. The worklog lists skills each run changed.
 skills_source:                     # folder where you edit your skills
-published_skills:                  # local clone of your public skills repo
+skills_publish:                    # command or skill that shares them, for example /publish-skills
 ---
 # Profile
 

@@ -112,18 +112,17 @@ Then update the notes that span weeks:
 - **Fixes:** in `~/notes/_meta/Fixes.md`, add each fix the user ships for a friction, with its date and link. Raise the "sessions affected" count on fixes that showed up again in this run's older sessions.
 - **Workflow changes:** for each change made to this skill, EXTRACT.md, `sessions.py`, or another skill because of this run, add a dated entry to `~/notes/_meta/Worklog Changelog.md`. Each entry says what changed, why, and which run found it.
 
-## Publish skill updates
+## Skill changes
 
-Optional. On when `profile.md` sets `published_skills` (a local clone of a public skills repo) and `skills_source` (the folder where the user edits their skills). Skip this section when either is blank.
+Many fixes are edits to the user's own agent skills. After the notes are written, list every skill this run changed, so the user knows what to tell the people who use them.
 
-Run it when this run's fixes changed any skill under `skills_source` that the published repo also carries. Fixes often land as PRs, so first confirm with the user that those PRs merged, then pull `skills_source`.
+1. Find the skills. Check the fixes this run shipped, and `git log --since <window start>` in `skills_source` from `profile.md` when it is set. Fix PRs that are still open do not count yet. Ask whether they merged.
+2. For each changed skill, write one bullet: the skill name, then what changes for the person who uses it, in plain words. Leave out why it changed, who asked, and any company or repo names. Keep it to 2 to 4 bullets in total.
+3. Show the bullets in the run summary, ready to paste.
+4. If `profile.md` sets `skills_publish`, offer to run that command with the changed skill names. It owns how the skills get shared. This skill never pushes them itself.
+5. Add a line to `~/notes/_meta/Worklog Changelog.md` that names the changed skills and whether they were published.
 
-1. In `published_skills`, run its sync script (`scripts/sync.sh` by convention). It copies the changed skills in and blocks any line that looks private. If it blocks, fix the line in `skills_source`, never in the published copy.
-2. Show the user `git diff` in `published_skills`. Wait for their OK before you commit.
-3. Write 2 to 4 bullets for its `CHANGELOG.md`, under today's date. Each bullet names the skill and what changed for the person who uses it, in plain words. Leave out why the change happened and any names.
-4. Commit and push. Then run the repo's own install command once on this machine, so the user's other copies update too.
-5. Give the user a short message they can paste to coworkers: one line with the install command, then the bullets.
-6. Add a line to `~/notes/_meta/Worklog Changelog.md` that names the skills published.
+Skip this section when no skill changed.
 
 ## Optional notes
 
@@ -140,6 +139,6 @@ Commit early and often in `~/notes`. Make a small commit after each step that wr
 1. Save the checkpoint with `sessions.py checkpoint --set <end>`, unless this is a backfill run that ends before the present.
 2. Commit anything left, then push.
 3. Delete the temp folder.
-4. If skills changed, run Publish skill updates.
+4. If skills changed, run Skill changes.
 
-The run is done when every listed session and PR appears in the plan as a finding or as dropped, every findings file is saved, every note above is updated, any skill updates are published, and the push succeeded.
+The run is done when every listed session and PR appears in the plan as a finding or as dropped, every findings file is saved, every note above is updated, any skill changes are listed, and the push succeeded.

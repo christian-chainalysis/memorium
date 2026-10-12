@@ -4,7 +4,7 @@ Changes to the Memorium kit, newest first.
 
 ## Unreleased
 
-- `worklog`: optional Publish skill updates step. When a run's fixes change a skill you share, it syncs the public skills repo, writes changelog bullets, pushes, reinstalls locally, and drafts a message for coworkers. Turn it on with `skills_source` and `published_skills` in `profile.md`.
+- `worklog`: a Skill changes step. When a run's fixes change your agent skills, it lists them as plain bullets you can paste to the people who use them. Set `skills_source` in `profile.md` to read changes from git, and `skills_publish` to name your own command for sharing them.
 - `topic`: topics can name any live source, not only a repo. A brief lists sources under `live:`, each a `repo` or a read-only `command` (such as an issue tracker CLI), with a `checked` marker and a `snapshot`. Chat and update read every source and report what changed. Old `repo:` fields still work.
 
 ## 0.1.0
