@@ -29,7 +29,7 @@ Write `~/notes/Meetings/<Meeting>/YYYY-MM-DD.md`. If the folder has earlier note
 - **Summary:** 3 to 5 bullets in your own words. Never copy a tool's auto summary.
 - **Decisions:** aligned or needs discussion, one line each.
 - **<User's first name>'s role:** what they drove, proposed, taught, or pushed back on, with short quotes. This is the most important section.
-- **Others:** notable contributions, written as `Name (handle)` from `~/notes/_meta/people.md`.
+- **Others:** notable contributions, written as `Name (handle)` from `~/notes/_meta/people.md`. When a person is missing, follow the "Finding someone's handle" steps in `people.md` before you write the name alone. If that section is empty, ask the user once how to find handles in their org, and save the answer there.
 - **Action items**, **Numbers**, and **Themes**.
 
 Keep the raw transcript out of the vault. Leave out anything the user marks private.

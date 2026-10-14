@@ -17,7 +17,7 @@ Use their words for the work, not the agent's process. Quote them when a quote s
 
 - **PR authors and state:** for any PR not in the PR lists, run `gh pr view <n> -R <owner>/<repo> --json author,state,mergedAt,title`. Never guess who wrote a PR or whether it merged. Mark PRs you looked up with `(looked up)`.
 - **Credit:** follow the credit notes in `profile.md`. When work was shared, name everyone who built it. Never give the user credit for work that started before them or that someone else did.
-- **Names:** use the seed lists. Reuse a seed topic slug or effort name when the work matches. Write people as `Name (github-handle)`, taking the pair from `people.md` or the PR author. When you can't find a handle, write the name alone.
+- **Names:** use the seed lists. Reuse a seed topic slug or effort name when the work matches. Write people as `Name (github-handle)`, taking the pair from `people.md` or the PR author. When a person is missing, follow the "Finding someone's handle" steps in `people.md`. Write the name alone only if those steps fail.
 - **Links between sessions:** do not guess that one session caused work in another. The orchestrator links sessions.
 - **Secrets:** never copy a token, key, or password. Note only that one was pasted, and whether the session shows it was rotated.
 
