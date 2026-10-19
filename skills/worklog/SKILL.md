@@ -114,12 +114,12 @@ Then update the notes that span weeks:
 
 ## Skill changes
 
-Many fixes are edits to the user's own agent skills. After the notes are written, list every skill this run changed, so the user knows what to tell the people who use them.
+Many fixes are edits to the user's own agent skills. After the notes are written, list every skill this run changed.
 
 1. Find the skills. Check the fixes this run shipped, and `git log --since <window start>` in `skills_source` from `profile.md` when it is set. Fix PRs that are still open do not count yet. Ask whether they merged.
 2. For each changed skill, write one bullet: the skill name, then what changes for the person who uses it, in plain words. Leave out why it changed, who asked, and any company or repo names. Keep it to 2 to 4 bullets in total.
-3. Show the bullets in the run summary, ready to paste.
-4. If `profile.md` sets `skills_publish`, offer to run that command with the changed skill names. It owns how the skills get shared. This skill never pushes them itself.
+3. Show the bullets in the run summary. Do not draft a chat message unless the user asks.
+4. If `profile.md` sets `skills_publish`, run that command with the changed skill names and the bullets. Run it without asking when `skills_publish_auto: true`. Otherwise offer it first. The command owns how skills get shared and what counts as safe to share. This skill never pushes them itself.
 5. Add a line to `~/notes/_meta/Worklog Changelog.md` that names the changed skills and whether they were published.
 
 Skip this section when no skill changed.

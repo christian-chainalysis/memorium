@@ -22,6 +22,7 @@ jira: off
 # Optional: your own agent skills. The worklog lists skills each run changed.
 skills_source:                     # folder where you edit your skills
 skills_publish:                    # command or skill that shares them, for example /publish-skills
+skills_publish_auto: false         # true runs skills_publish after each run without asking
 ---
 # Profile
 
