@@ -24,6 +24,7 @@ skills_source:                     # folder where you edit your skills
 skills_publish:                    # command or skill that shares them, for example /publish-skills
 skills_publish_auto: false         # true runs skills_publish after each run without asking
 skills_private: []                 # skills that hold work details. Never offered for publishing.
+weekly_checks: []                  # recurring upkeep the worklog offers each regular run, such as "sweep a skill's memory file".
 ---
 # Profile
 

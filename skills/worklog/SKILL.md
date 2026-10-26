@@ -131,6 +131,12 @@ Many fixes are edits to the user's own agent skills. After the notes are written
 
 Skip this section when no skill changed.
 
+## Weekly checks
+
+`profile.md` may list `weekly_checks`: recurring upkeep the user wants offered on each regular run, such as sweeping a skill's memory file. Each item names what to run, in the user's words. After the notes are written, list the items and ask which to run now. Run only the ones the user picks. Each item owns its own steps and its own private details, so this skill holds no knowledge of them. Note the ones that ran in the run summary.
+
+Skip this section when `weekly_checks` is unset or empty.
+
 ## Optional notes
 
 The vault ships with sensible defaults: About Me, Achievements, Projects, Kudos, Docs, Open Questions, and Home. If the user removed one at setup, skip its step. `AGENTS.md` lists what the user keeps.

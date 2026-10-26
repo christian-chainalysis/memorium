@@ -4,6 +4,7 @@ Changes to the Memorium kit, newest first.
 
 ## Unreleased
 
+- `worklog`: a Weekly checks step. List recurring upkeep under `weekly_checks` in `profile.md`, and each regular run offers it after the notes are written. The kit holds no details about the checks themselves.
 - `papercut`: new skill. Agents log friction the moment it happens, one JSON line per cut in `_meta/papercuts/<YYYY-Www>.jsonl`, repeats included. Ten categories, from `correction` to `flaky`. The script refuses text that looks like a secret.
 - `worklog`: reads the week's paper cuts as the main friction source. The plan groups cuts by cause, names the layer and place for each fix, and counts friction the sessions show that no cut logged. Each week gets a `_meta/papercuts/<YYYY-Www>.md` summary.
 - `worklog`: skills listed in `skills_private` in `profile.md` are never offered for publishing.
