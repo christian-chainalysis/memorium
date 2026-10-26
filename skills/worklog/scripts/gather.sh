@@ -46,6 +46,24 @@ else
 fi
 $S memory --since "${START}T00:00:00" --until "${END}T00:00:00" > "$OUT/memory.txt"
 
+# Paper cuts: copy each ISO week file in the window, and summarize it.
+mkdir -p "$OUT/papercuts"
+PAPERCUT="$HERE/../../papercut/scripts/papercut.py"
+for label in $(python3 -c "
+import datetime as d
+s, e = d.date.fromisoformat('$START'), d.date.fromisoformat('$END')
+seen = []
+while s < e:
+    y, w, _ = s.isocalendar(); l = f'{y}-W{w:02d}'
+    if l not in seen: seen.append(l)
+    s += d.timedelta(days=1)
+print(' '.join(seen))"); do
+  if [ -f "$VAULT/_meta/papercuts/$label.jsonl" ]; then
+    cp "$VAULT/_meta/papercuts/$label.jsonl" "$OUT/papercuts/"
+    [ -f "$PAPERCUT" ] && NOTES_VAULT="$VAULT" python3 "$PAPERCUT" summary --week "$label" > "$OUT/papercuts/$label-summary.txt"
+  fi
+done
+
 # Batch dumps: one batch per dump over 90 KB, others packed to about 70 KB.
 python3 - "$OUT" <<'EOF'
 import os, sys
@@ -76,4 +94,5 @@ echo "reviewed PRs: $(jq length "$OUT/prs-reviewed.json")"
 echo "dump bytes: $(cat "$OUT"/dumps/* 2>/dev/null | wc -c)"
 echo "confluence pages: $(jq length "$OUT/confluence.json")"
 echo "memory files: $(wc -l < "$OUT/memory.txt")"
+echo "paper cuts: $(cat "$OUT"/papercuts/*.jsonl 2>/dev/null | wc -l | tr -d ' ')"
 for b in "$OUT"/batch-*.txt; do echo "$(basename "$b"): $(wc -l < "$b" | tr -d ' ')+1 files"; done

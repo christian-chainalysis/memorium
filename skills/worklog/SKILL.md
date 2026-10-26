@@ -22,6 +22,7 @@ The script `scripts/sessions.py` (next to this file) reads every source. Run it 
 | Confluence (optional) | On when `profile.md` sets `confluence_site`. Pages the user created or edited in the window, with their edit counts. `scripts/confluence.py list --since <start> --until <end>`, then `dump <id> --out <tmpdir>/confluence` for each page they created or edited substantially. |
 | Jira (optional) | Off unless the user asks. Issues they created, were assigned, or resolved in the window, through `/rest/api/3/search/jql` with JQL like `assignee = currentUser() AND resolved >= <start>`, using the same Keychain token. |
 | Meeting notes | `~/notes/Meetings/*/`, one note per meeting. Read the notes dated in the window, and link them from the week note. |
+| Paper cuts | `~/notes/_meta/papercuts/<YYYY-Www>.jsonl`, friction agents logged the moment it happened, through the `papercut` skill. One JSON line per cut, repeats included. This is the main friction source. |
 | Claude Code memory | Notes Claude Code saved about the user's repos, decisions, and feedback, if they use Claude Code. Run `sessions.py memory --since <start>` for the paths. |
 
 ## 1. Pick the window
@@ -47,6 +48,8 @@ Save the window end before listing, so the checkpoint matches the window exactly
    - People: `~/notes/_meta/people.md`, which maps GitHub handles to names.
    - Known fixes: the friction fixes already shipped, listed in `~/notes/_meta/Worklog Changelog.md` and `~/notes/_meta/Fixes.md`.
 
+8. Paper cuts: copy the week files in the window from `~/notes/_meta/papercuts/` to `<tmpdir>/papercuts/`, and run `papercut.py summary --week <label>` for each week.
+
 Tell the user the counts for each source before you go on.
 
 ## 2. Dump the sessions
@@ -56,6 +59,8 @@ For each session, run `sessions.py dump <tool> <id> --since <start> --out <tmpdi
 ## 3. Extract with one subagent per session
 
 List the batch files with `ls <tmpdir>/batch-*.txt` and start exactly one subagent per file. Start them in parallel. When you split a window across subagents by month, cut on ISO week edges, so no two subagents write the same week. Give each dump over about 90 KB its own subagent. Pack smaller dumps into a single subagent, up to about 110 KB in total. Send PRs and memory files from weeks with no sessions to one more subagent. Give each subagent the file paths, the PR lists, the seed lists, and the brief in [EXTRACT.md](EXTRACT.md).
+
+Tell each subagent that paper cuts already cover the friction agents logged. Its Friction section should still record friction in the transcript, so the plan can compare the two sources. It does not need to dig harder than before.
 
 Each subagent writes its findings to `~/notes/_meta/findings/<YYYY-MM>/<tool>-<id>.md` and returns a short summary. These files are the single source of truth for the audit.
 
@@ -69,6 +74,7 @@ Merge work findings that share a topic. Group them by ISO week, using each work 
 - **Efforts:** each effort that moved this window, in one line each. Flag a new effort when one theme shows up in three or more sessions or PRs across two or more weeks.
 - achievement candidates, each marked with its size and effort (see EXTRACT.md)
 - **How you work:** the three to five strongest patterns from the "about you" findings, each with evidence and a session count
+- **Paper cuts:** group the week's cuts by cause, not by wording. Count every cut, repeats included. For each group, ask what sits one level up: one missing doc, one skill step, one setup script, or one code bug can explain cuts that look different. Name the layer that should own the fix, strongest first: the code or tooling itself, then a check or lint rule, then a skill, then an AGENTS.md line, then a doc. Say where the fix goes: a work repo PR, a personal skill, the global agent rules, the kit, or nothing for a one-off. Then compare with the Friction findings. List friction the sessions show that no cut logged, as a count. A high count means agents are not logging, and the rule that tells them to needs work.
 - **Fix candidates:** open friction only, ranked by how often it came back and how cheap the fix is. Before you list one, check that it still happens: read the current repo docs, skill, or config it points at. On a backfill, friction from months ago is history, not a to-do. Show a fix candidate from an old window only if it also showed up in the last month, or you checked that it is still true today.
 - **Fixed since:** one line per old friction that a known fix now covers, with the count of sessions it cost. This shows the payoff of each fix.
 - **By the numbers:** six to ten stats from the stats file, compared with the running averages in `~/notes/About Me/By the Numbers.md`
@@ -109,6 +115,7 @@ Then update the notes that span weeks:
 - **Numbers:** append one row per week to the table in `~/notes/About Me/By the Numbers.md`, including the `work_time` buckets from the stats file (active hours for weekday core, early, evening, weekend, and the after-hours total). Refresh the When I work year-to-date table. Add any standout stat to its Highlights list.
 - **People:** add new handle and name pairs to `~/notes/_meta/people.md`. For anyone still missing a handle, follow the "Finding someone's handle" steps in `people.md`. If that section is empty, ask the user once how to find handles in their org, and save the answer there.
 - **Home:** if a big win, a headline number, or an effort changed, update `~/notes/Home.md`. Keep it one screen long.
+- **Paper cuts:** write `~/notes/_meta/papercuts/<YYYY-Www>.md` for each week next to its `.jsonl`: the groups, their counts, the chosen fix and where it went, and the unlogged count. Leave the `.jsonl` as it is. It is the raw record.
 - **Fixes:** in `~/notes/_meta/Fixes.md`, add each fix the user ships for a friction, with its date and link. Raise the "sessions affected" count on fixes that showed up again in this run's older sessions.
 - **Workflow changes:** for each change made to this skill, EXTRACT.md, `sessions.py`, or another skill because of this run, add a dated entry to `~/notes/_meta/Worklog Changelog.md`. Each entry says what changed, why, and which run found it.
 
@@ -119,7 +126,7 @@ Many fixes are edits to the user's own agent skills. After the notes are written
 1. Find the skills. Check the fixes this run shipped, and `git log --since <window start>` in `skills_source` from `profile.md` when it is set. Fix PRs that are still open do not count yet. Ask whether they merged.
 2. For each changed skill, write one bullet: the skill name, then what changes for the person who uses it, in plain words. Leave out why it changed, who asked, and any company or repo names. Keep it to 2 to 4 bullets in total.
 3. Show the bullets in the run summary. Do not draft a chat message unless the user asks.
-4. If `profile.md` sets `skills_publish`, run that command with the changed skill names and the bullets. Run it without asking when `skills_publish_auto: true`. Otherwise offer it first. The command owns how skills get shared and what counts as safe to share. This skill never pushes them itself.
+4. Drop every skill listed in `skills_private` in `profile.md`. Those stay private, so never offer to publish them. If `profile.md` sets `skills_publish` and skills remain, run that command with the remaining skill names and the bullets. Run it without asking when `skills_publish_auto: true`. Otherwise offer it first. The command owns how skills get shared and what counts as safe to share. This skill never pushes them itself.
 5. Add a line to `~/notes/_meta/Worklog Changelog.md` that names the changed skills and whether they were published.
 
 Skip this section when no skill changed.
