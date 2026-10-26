@@ -26,10 +26,11 @@ Run `/worklog` once a week. It reads every agent session and PR from last week, 
 - **Friction, sorted by fix:** what tripped you or your agent up, and whether the fix is a skill, an AGENTS.md line, a doc PR, or tooling.
 - **By the Numbers:** prompts, active hours, after-hours work, PRs, time to merge, and reviews per person, saved every week for charts at year end.
 
-Two more skills round it out:
+Three more skills round it out:
 
 - `/meeting` turns a meeting transcript into a note that leads with your role.
 - `/topic` keeps a private brief about a subject, built from a repo plus transcripts, that you can ask questions against.
+- `papercut` lets agents log friction the moment they hit it, in one line, without stopping. The weekly worklog groups the cuts, counts them, and looks for the fix one level up, so ten small cuts can become one real fix.
 
 ## Two repos
 
@@ -59,6 +60,9 @@ skills/
   worklog/     SKILL.md, EXTRACT.md (the brief each subagent gets), scripts/
   meeting/     SKILL.md, scripts/clean.py
   topic/       SKILL.md
+  papercut/    SKILL.md, scripts/papercut.py
+tools/
+  leak-guard/  a pre-push hook that blocks private terms from public repos
 vault-template/
   AGENTS.md    vault rules for agents
   Home.md      your one-screen overview
@@ -93,6 +97,27 @@ The folders, note names, and sections are a starting point. Rename, drop, or add
 - The skills are symlinks into your clone of this repo. When you improve a skill, you're editing the kit. Write the change generically, then commit and push it here.
 - A skill that only fits you stays in your own skills folder.
 - Pull the kit to get others' improvements.
+
+## Paper cuts
+
+Add one line to your global agent rules (such as `~/.config/agents/AGENTS.md` or `~/.claude/CLAUDE.md`) so every agent logs friction without being asked:
+
+```
+When you hit friction (a dead end, stale or missing docs, a skill that does the wrong thing, a setup snag, a flaky check) or the user corrects you, log it once with the papercut skill and keep going. Do not stop to fix it or tell the user.
+```
+
+Cuts go to `_meta/papercuts/<YYYY-Www>.jsonl` in your vault. You can also say "papercut: <what bugged you>" in any session.
+
+## Publishing from a work machine
+
+If you push skills or kit changes to a public repo, install `tools/leak-guard` as a pre-push hook there. It reads a private list of terms (coworker names, work repos, internal tools) from `~/.config/leak-guard/terms.txt`, ignores letter case and accents, and refuses the push when any term shows up in an added line, a file path, or a commit's message or author. It refuses to run with no list, so a missing file never means an unchecked push.
+
+```sh
+cd <public repo> && python3 ~/dev/memorium/tools/leak-guard/leak-guard.py install
+python3 ~/dev/memorium/tools/leak-guard/leak-guard.py history   # check what is already public
+```
+
+Set the public repo's commit email to your GitHub noreply address, so your work email never lands in a commit.
 
 ## Limits
 
