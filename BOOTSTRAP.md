@@ -48,6 +48,8 @@ Symlink each folder in the kit's `skills/` into every skills folder my harnesses
 ln -s ~/dev/memorium/skills/worklog ~/.config/agents/skills/worklog
 ```
 
+Also add the paper cut rule from the README's Paper cuts section to my global agent rules file, after I say OK.
+
 If a harness I use has no built-in session reader, offer to write one in `skills/worklog/scripts/sessions.py`, following the notes in its header. Write it generically, so it can go back into the kit.
 
 ## 5. First run
