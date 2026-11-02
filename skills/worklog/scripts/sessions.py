@@ -60,8 +60,11 @@ def github_login():
     return r.stdout.strip()
 CHECKPOINT = VAULT / "_meta/worklog-checkpoint.json"
 
-# Sessions in these folders are scratch work or notes work, not project work.
-SKIP_DIRS = ("/private/var/folders/", "/var/folders/", "/tmp/", str(VAULT))
+# Sessions in these folders are scratch work, not project work.
+SKIP_DIRS = ("/private/var/folders/", "/var/folders/", "/tmp/")
+# Sessions started in the vault are kept, since real work often starts there.
+# Only runs of these skills are skipped, because they read sessions instead of doing work.
+VAULT_SKIP_TITLES = ("[skill: Worklog]", "[skill: Meeting]")
 
 TEXT_LIMIT = 4000
 TOOL_INPUT_LIMIT = 300
@@ -90,8 +93,10 @@ def clip(text, limit):
     return text if len(text) <= limit else text[:limit] + f" ...[{len(text) - limit} more chars]"
 
 
-def skipped(cwd):
-    return any(cwd.startswith(d) for d in SKIP_DIRS)
+def skipped(cwd, title=""):
+    if any(cwd.startswith(d) for d in SKIP_DIRS):
+        return True
+    return cwd.startswith(str(VAULT)) and title.startswith(VAULT_SKIP_TITLES)
 
 
 # ---------- OpenCode ----------
@@ -782,7 +787,7 @@ def main():
         sessions = (opencode_list(s_ms, u_ms) + pi_list(s_ms, u_ms) + transcripts
                     + claude_history_list(s_ms, u_ms, all_claude_ids))
         if not args.all:
-            sessions = [s for s in sessions if not skipped(s["cwd"]) and s["user_messages"] > 0]
+            sessions = [s for s in sessions if not skipped(s["cwd"], s.get("title") or "") and s["user_messages"] > 0]
         sessions.sort(key=lambda s: s["updated"])
         print(json.dumps({"since": since.isoformat(), "until": until.isoformat(), "count": len(sessions), "sessions": sessions}, indent=2))
         return

@@ -51,3 +51,5 @@ python3 <this skill>/scripts/papercut.py log <category> "<what happened>" [--ski
 - `papercut.py list --week 2026-W44` prints every cut for one week.
 
 The files live in the vault at `_meta/papercuts/<YYYY-Www>.jsonl`, one JSON object per line.
+
+The `.jsonl` files are agent logs, not the user's work. When you commit in the vault, commit any changed `_meta/papercuts/*.jsonl` with your change. Never edit or delete a line. The weekly worklog reads them as they are.

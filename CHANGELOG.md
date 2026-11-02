@@ -4,6 +4,8 @@ Changes to the Memorium kit, newest first.
 
 ## Unreleased
 
+- `worklog`: sessions started in the vault are listed and counted in stats again. Only worklog and meeting runs there are skipped. Real work often starts in the vault, and the old skip hid it.
+- `papercut`: say that agents commit `_meta/papercuts/*.jsonl` with their vault commits and never edit a line.
 - `worklog`: a Weekly checks step. List recurring upkeep under `weekly_checks` in `profile.md`, and each regular run offers it after the notes are written. The kit holds no details about the checks themselves.
 - `papercut`: new skill. Agents log friction the moment it happens, one JSON line per cut in `_meta/papercuts/<YYYY-Www>.jsonl`, repeats included. Ten categories, from `correction` to `flaky`. The script refuses text that looks like a secret.
 - `worklog`: reads the week's paper cuts as the main friction source. The plan groups cuts by cause, names the layer and place for each fix, and counts friction the sessions show that no cut logged. Each week gets a `_meta/papercuts/<YYYY-Www>.md` summary.
